@@ -9,8 +9,8 @@ import Test from './components/test'
 
 export default {
   name: 'App',
-    components: {
-      Test
+  components: {
+    Test
   }
 }
 </script>

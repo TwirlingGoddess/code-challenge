@@ -17,6 +17,15 @@
     <label>Last Name: </label><input type="text" v-on:keyup.enter="enterHit" v-model="user.lastName">
     <h3>{{fullName}}</h3>
     <h2>{{msg}}</h2>
+    <hr />
+    <h1>Gallery</h1>
+    <section>
+      <aside v-for="image in images" :key="image.id">
+        <h3>{{image.caption}}</h3>
+        <h3>{{image.date}}</h3>
+        <img v-bind:src="image.baseimageurl"  alt="Smiley face" height="100" width="100" />
+      </aside>
+    </section>
   </div>
 
 </template>

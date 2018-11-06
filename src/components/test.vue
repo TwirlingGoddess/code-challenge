@@ -23,8 +23,9 @@
       <aside v-for="image in images" :key="image.id">
         <h3>{{image.caption}}</h3>
         <h3>{{image.date}}</h3>
-        <img v-bind:src="image.baseimageurl"  alt="Smiley face" height="100" width="100" />
+        <img v-bind:src="image.baseimageurl"  alt="Smiley face" height="image.height" width="image.width/2" />
       </aside>
+      <button v-model="object" v-on:click="change (object.next)" >next</button>
     </section>
   </div>
 
@@ -52,13 +53,14 @@ export default {
         {title: 'Item Two'},
         {title: 'Item Three'}
       ],
-      images: []
+      images: [],
+      object: {}
     }
   },
   methods: {
     greet: function () {
       this.$http.get('https://api.harvardartmuseums.org/image?apikey=f0eebd50-e119-11e8-abe4-37afcc19e5ee').then(function (data) {
-        console.log(data.body.records)
+        console.log(data.body)
       })
     },
     pressKey: function (e) {
@@ -66,6 +68,12 @@ export default {
     },
     enterHit: function () {
       console.log('You hit the enter key boo')
+    },
+    change: function (url) {
+      this.$http.get(url).then(function (data) {
+        this.images = data.body.records
+        this.object = data.body.info
+      })
     }
   },
   computed: {
@@ -76,6 +84,7 @@ export default {
   created () {
     this.$http.get('https://api.harvardartmuseums.org/image?apikey=f0eebd50-e119-11e8-abe4-37afcc19e5ee').then(function (data) {
       this.images = data.body.records
+      this.object = data.body.info
     })
   }
 }
